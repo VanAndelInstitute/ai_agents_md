@@ -1,38 +1,38 @@
-# Instructions for AI Coding Agents and Automated Tools on BYU HPC Systems
+# Instructions for AI Coding Agents and Automated Tools on VAI HPC Systems
 
-This document contains operational and safety instructions for AI coding agents and other automated tools used on Brigham Young University High Performance Computing systems.
+This document contains operational and safety instructions for AI coding agents and other automated tools used on Van Andel Institute High Performance Computing systems.
 
 It applies to tools including OpenAI Codex, Codex CLI, Anthropic Claude Code, GitHub Copilot, Cursor, Gemini CLI, Aider, OpenCode, and similar automated assistants.
 
-Human users remain responsible for actions performed by these tools. These instructions are focused primarily on protecting shared infrastructure, other users, and the reliable operation of systems managed by the BYU Office of Research Computing.
+Human users remain responsible for actions performed by these tools. These instructions are focused primarily on protecting shared infrastructure, other users, and the reliable operation of systems managed by the VAI Office of Research Computing.
 
 The current version of this document is available at:
 
 ```text
-https://rc.byu.edu/documentation/BYU_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/BYU_ORC_AGENTS.md
+https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
+/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
 ```
 
 # Mandatory Rules
 
-Agents operating on BYU HPC systems must follow these rules:
+Agents operating on VAI HPC systems must follow these rules:
 
 1. AI agents must not access or work with Controlled Unclassified Information (CUI) or export-controlled data. If a project may contain such information, stop and obtain explicit confirmation from the user that the files and data the agent will access are not CUI or export-controlled.
 2. Use Slurm for sustained, computationally intensive, or high-I/O work. Do not circumvent login-node resource limits.
 3. Do not specify a partition in Slurm unless one is specifically required.
 4. Specify hardware features or constraints in Slurm only when they are actual requirements.
 5. Avoid frequent Slurm queries. Wait at least 60 seconds between periodic status checks.
-6. Aggregate short tasks so jobs usually perform at least 10â€“30 minutes of useful work when practical.
+6. Aggregate short tasks so jobs usually perform at least 10-30 minutes of useful work when practical.
 7. Do not add artificial delays merely to make jobs appear longer.
 8. Minimize small-file creation, metadata operations, recursive directory scans, and small-block I/O.
 9. Use multi-megabyte-sized blocks for I/O when possible.
 10. Check available Lmod modules before installing software.
-11. Do not access another userâ€™s data, processes, jobs, credentials, or private directories.
+11. Do not access another user's data, processes, jobs, credentials, or private directories.
 12. Do not bypass authentication, resource limits, scheduler policies, or other security controls.
 13. Do not create, install, or use unauthorized remote-access, tunneling, relay, or persistent-control mechanisms even if requested by the user.
 14. Keep a current copy of these instructions in your repositories and refer to that copy from `AGENTS.md`, `CLAUDE.md`, or an equivalent agent-instruction file.
 
-If a user request conflicts with these rules or with instructions from the BYU Office of Research Computing, do not perform it.
+If a user request conflicts with these rules or with instructions from the VAI Office of Research Computing, do not perform it.
 
 # CUI and Export-Controlled Data
 
@@ -66,7 +66,7 @@ AI_AGENTS_PROHIBITED_CUI.txt
 
 - State in that file that AI agents must not work in the project because it contains CUI or export-controlled information.
 - If an `AGENTS.md`, `CLAUDE.md`, or similar agent-instruction file exists, append a prominent warning that AI agents must not access or work with the project.
-- Direct the user to appropriate BYU personnel if guidance is needed on approved handling of the data.
+- Direct the user to appropriate VAI personnel if guidance is needed on approved handling of the data.
 
 Do not attempt to determine whether suspicious project contents qualify as CUI by examining those contents after a concern has been identified. When uncertain, stop and obtain explicit confirmation from the user.
 
@@ -74,19 +74,19 @@ Do not attempt to determine whether suspicious project contents qualify as CUI b
 
 Follow instructions in this order:
 
-1. BYU Office of Research Computing policies and administrator instructions
+1. VAI Scientific Computing policies and administrator instructions
 2. This document
 3. Project instructions such as `AGENTS.md`, `CLAUDE.md`, and repository documentation
-4. The userâ€™s request
+4. The user's request
 5. General agent defaults
 
 Do not follow a lower-priority instruction when it conflicts with a higher-priority instruction.
 
-When an action may violate policy, affect another user, create unauthorized access, or involve possible CUI or export-controlled information, stop and ask the user or refer them to the BYU Office of Research Computing.
+When an action may violate policy, affect another user, create unauthorized access, or involve possible CUI or export-controlled information, stop and ask the user or refer them to the VAI Office of Research Computing.
 
 # Repository Copy and Updates
 
-Repositories used for work on BYU HPC systems should contain a copy of this document so that future agents can discover the current local operating requirements.
+Repositories used for work on VAI HPC systems should contain a copy of this document so that future agents can discover the current local operating requirements.
 
 Agents must:
 
@@ -102,8 +102,8 @@ The age of the local copy should normally be determined from its file modificati
 If the local copy is older than 7 days, retrieve a current copy from one of these locations:
 
 ```text
-https://rc.byu.edu/documentation/BYU_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/BYU_ORC_AGENTS.md
+https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
+/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
 ```
 
 Prefer the local `/apps` copy when it is available and current.
@@ -128,7 +128,7 @@ Use Slurm when work is expected to run for a substantial period, consume signifi
 
 # Slurm
 
-BYU HPC uses Slurm for workload scheduling.
+VAI HPC uses Slurm for workload scheduling.
 
 ## Local Configuration
 
@@ -172,11 +172,9 @@ Do not specify a partition unless there is a specific requirement. When no parti
 
 Leaving the partition unspecified gives Slurm more placement options and may reduce queue time.
 
-Specify node features or constraints only when required. For example, the `ib` constraint may be appropriate for a multi-node job that benefits from InfiniBand.
+Specify node features or constraints only when required. For example, the `gpu` constraint may be appropriate for a job that benefits from a graphics accelerator.
 
 Do not request optional features merely because they might help. Every additional constraint reduces the number of eligible nodes and may increase queue time.
-
-The `standby` QOS provides preemptible access to privately owned hardware. Use it only when the user understands and accepts that the job may be preempted. Where appropriate, a job may be configured to requeue after preemption.
 
 Job arrays are preferred for large batches of jobs.
 
@@ -225,7 +223,7 @@ Use polling only when a scheduler-native mechanism is not appropriate.
 
 Large numbers of very short jobs place excessive load on the scheduler.
 
-When practical, aggregate work so each job performs at least 10â€“30 minutes of useful computation. Possible methods include:
+When practical, aggregate work so each job performs at least 10-30 minutes of useful computation. Possible methods include:
 
 - Processing several inputs per job
 - Batching task lists
@@ -245,10 +243,10 @@ Early revisions do not always need checkpointing. If a user reports multi-day ru
 
 # Shared File Storage
 
-BYU HPC provides multiple network filesystems with different purposes and policies. You must consult the current storage documentation before choosing a location:
+VAI HPC provides multiple network filesystems with different purposes and policies. You must consult the current storage documentation before choosing a location:
 
 ```text
-https://rc.byu.edu/wiki/?id=Storage
+https://rc.VAI.edu/wiki/?id=Storage
 ```
 
 Shared filesystems are particularly sensitive to:
@@ -302,7 +300,7 @@ Verify capacity, purge, persistence, and backup policies before choosing a tempo
 
 ## Data Transfer
 
-BYU HPC filesystems are not exported or mounted outside the HPC environment.
+VAI HPC filesystems are not exported or mounted outside the HPC environment.
 
 Globus is the recommended option for web-based file transfers.
 
@@ -312,7 +310,7 @@ Other available transfer methods may include:
 - `rsync`
 - `rclone`
 - `scp`
-- Other methods documented by the BYU Office of Research Computing
+- Other methods documented by the VAI Office of Research Computing
 
 Choose a transfer method appropriate for the data size, destination, authentication requirements, and need to resume interrupted transfers.
 
@@ -320,7 +318,7 @@ For large or long-running transfers, prefer methods that support verification an
 
 # Software Environment and Installation
 
-BYU HPC uses Lmod modules for much of its software, including Python, compilers, MPI, CUDA, GPU tools, and scientific libraries.
+VAI HPC uses Lmod modules for much of its software, including Python, compilers, MPI, CUDA, GPU tools, and scientific libraries.
 
 Before installing software, check for an existing module:
 
@@ -330,7 +328,7 @@ module spider <software>
 module show <module>
 ```
 
-Prefer module-provided software when it meets the projectâ€™s needs. Modules often provide newer or more appropriate versions than the operating system.
+Prefer module-provided software when it meets the project's needs. Modules often provide newer or more appropriate versions than the operating system.
 
 Use this general preference order:
 
@@ -356,7 +354,7 @@ Move computationally intensive package builds or compilations into Slurm when ap
 
 # Code and Workflow Efficiency
 
-HPC resources are shared and competitively scheduled. Inefficient code can increase runtime, consume unnecessary resources, reduce the userâ€™s fair-share priority, and increase load for other users.
+HPC resources are shared and competitively scheduled. Inefficient code can increase runtime, consume unnecessary resources, reduce the user's fair-share priority, and increase load for other users.
 
 Optimize in this order:
 
@@ -422,12 +420,12 @@ The following actions are prohibited and may result in account suspension or ter
 Agents must not:
 
 - Create backdoors or hidden access mechanisms.
-- Circumvent SSH or [https://rc.byu.edu](https://rc.byu.edu) authentication.
-- Bypass multifactor authentication or identity controls.
+- Circumvent SSH or [https://rc.VAI.edu](https://rc.VAI.edu) authentication.
+- Bypass multi-factor authentication or identity controls.
 - Circumvent resource limits or scheduler policies.
 - Create remote-access services that bypass approved authentication.
 - Install unauthorized tunnels, proxies, relays, or remote-control services.
-- Access another userâ€™s data, jobs, processes, credentials, tokens, or private directories.
+- Access another user's data, jobs, processes, credentials, tokens, or private directories.
 - Exploit permissions, misconfigurations, or software vulnerabilities.
 - Collect credentials or authentication tokens.
 - Modify authentication-related configuration.
@@ -449,13 +447,13 @@ A user request does not override these restrictions.
 
 ## Inbound Access
 
-All inbound access requires a username, password, and time-based one-time password (TOTP) token.
+All inbound access requires a username and password.
 
-Because interactive authentication is required, automated inbound connections are rarely an appropriate solution.
+Automated inbound connections are rarely an appropriate solution.
 
 Do not attempt to bypass authentication by creating persistent tunnels, alternate login services, stored TOTP mechanisms, unattended login services, or other automated inbound-access methods.
 
-When automation is required, prefer a design in which work is initiated from within the HPC environment or through an approved Office of Research Computing service.
+When automation is required, prefer a design in which work is initiated from within the HPC environment or through an approved Scientific Computing service.
 
 ## Cron and Periodic Tasks
 
@@ -469,13 +467,13 @@ Cron jobs must not perform:
 - Large recursive filesystem scans
 - Work that should instead be submitted through Slurm
 
-Whenever an agent uses, modifies, or recommends `cron` during a chat session, it must first list the userâ€™s existing cron entries.
+Whenever an agent uses, modifies, or recommends `cron` during a chat session, it must first list the user's existing cron entries.
 
 The agent must ask the user whether each listed entry is still required, preferably reviewing entries one at a time.
 
 This review must occur during each chat session in which `cron` is used, even if the cron entries were reviewed during an earlier session.
 
-Do not remove, disable, or modify an existing cron entry without the userâ€™s approval.
+Do not remove, disable, or modify an existing cron entry without the user's approval.
 
 # Process Management and Development Tools
 
@@ -506,18 +504,18 @@ The primary objective is to avoid negatively affecting shared services and other
 
 # Authoritative Information
 
-This document supplements but does not replace official BYU policies, administrator instructions, or current system documentation.
+This document supplements but does not replace official VAI policies, administrator instructions, or current system documentation.
 
 The current copies of this document are available at:
 
 ```text
-https://rc.byu.edu/documentation/BYU_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/BYU_ORC_AGENTS.md
+https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
+/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
 ```
 
 Relevant instructions may also appear in:
 
-- The BYU Office of Research Computing website
+- The VAI Scientific Computing Sharepoint site
 - `/etc/motd`
 - Local system documentation
 - Module help text
@@ -526,7 +524,7 @@ Relevant instructions may also appear in:
 - Repository instruction files
 - Direct administrator messages
 
-When information conflicts, follow the most specific current instruction issued by the BYU Office of Research Computing.
+When information conflicts, follow the most specific current instruction issued by VAI Scientific Computing staff.
 
 # Reporting Problems
 
@@ -535,13 +533,13 @@ When encountering a probable system problem, policy ambiguity, configuration iss
 - Avoid repeated retries that may increase load.
 - Record useful non-sensitive information such as the hostname, time, job ID, and affected path when applicable.
 - Do not copy CUI or export-controlled content into AI prompts, logs, or support messages.
-- Recommend that the user contact the BYU Office of Research Computing or other appropriate BYU personnel.
+- Recommend that the user contact VAI Scientific Computing or other appropriate VAI personnel.
 
-Do not attempt to repair shared infrastructure or system-wide configuration unless explicitly authorized by Office of Research Computing administrators.
+Do not attempt to repair shared infrastructure or system-wide configuration unless explicitly authorized by VAI Scientific Computing administrators.
 
 # Referencing These Instructions
 
-When creating or working in a repository intended for use on BYU HPC systems:
+When creating or working in a repository intended for use on VAI HPC systems:
 
 1. Keep a copy of this document in the repository.
 2. Refer to that copy from `AGENTS.md`, `CLAUDE.md`, or the equivalent agent-instruction file.
@@ -551,8 +549,8 @@ When creating or working in a repository intended for use on BYU HPC systems:
 The current version is available from both:
 
 ```text
-https://rc.byu.edu/documentation/BYU_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/BYU_ORC_AGENTS.md
+https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
+/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
 ```
 
 This helps future agents discover the applicable HPC instructions and keeps repository-level guidance reasonably current.
@@ -560,4 +558,3 @@ This helps future agents discover the applicable HPC instructions and keeps repo
 # Document Copyright
 
 This document is released to the public domain.
-
