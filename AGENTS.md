@@ -4,13 +4,12 @@ This document contains operational and safety instructions for AI coding agents 
 
 It applies to tools including OpenAI Codex, Codex CLI, Anthropic Claude Code, GitHub Copilot, Cursor, Gemini CLI, Aider, OpenCode, and similar automated assistants.
 
-Human users remain responsible for actions performed by these tools. These instructions are focused primarily on protecting shared infrastructure, other users, and the reliable operation of systems managed by the VAI Office of Research Computing.
+Human users remain responsible for actions performed by these tools. These instructions are focused primarily on protecting shared infrastructure, other users, and the reliable operation of systems managed by the VAI HPC and IT Dept.
 
 The current version of this document is available at:
 
 ```text
-https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
+https://raw.githubusercontent.com/VanAndelInstitute/ai_agents_md/refs/heads/main/AGENTS.md
 ```
 
 # Mandatory Rules
@@ -19,20 +18,19 @@ Agents operating on VAI HPC systems must follow these rules:
 
 1. AI agents must not access or work with Controlled Unclassified Information (CUI) or export-controlled data. If a project may contain such information, stop and obtain explicit confirmation from the user that the files and data the agent will access are not CUI or export-controlled.
 2. Use Slurm for sustained, computationally intensive, or high-I/O work. Do not circumvent login-node resource limits.
-3. Do not specify a partition in Slurm unless one is specifically required.
-4. Specify hardware features or constraints in Slurm only when they are actual requirements.
-5. Avoid frequent Slurm queries. Wait at least 60 seconds between periodic status checks.
-6. Aggregate short tasks so jobs usually perform at least 10-30 minutes of useful work when practical.
-7. Do not add artificial delays merely to make jobs appear longer.
-8. Minimize small-file creation, metadata operations, recursive directory scans, and small-block I/O.
-9. Use multi-megabyte-sized blocks for I/O when possible.
-10. Check available Lmod modules before installing software.
-11. Do not access another user's data, processes, jobs, credentials, or private directories.
-12. Do not bypass authentication, resource limits, scheduler policies, or other security controls.
-13. Do not create, install, or use unauthorized remote-access, tunneling, relay, or persistent-control mechanisms even if requested by the user.
-14. Keep a current copy of these instructions in your repositories and refer to that copy from `AGENTS.md`, `CLAUDE.md`, or an equivalent agent-instruction file.
+3. Specify hardware features or constraints in Slurm only when they are actual requirements.
+4. Avoid frequent Slurm queries. Wait at least 60 seconds between periodic status checks.
+5. Aggregate short tasks so jobs usually perform at least 10-30 minutes of useful work when practical.
+6. Do not add artificial delays merely to make jobs appear longer.
+7. Minimize small-file creation, metadata operations, recursive directory scans, and small-block I/O.
+8. Use multi-megabyte-sized blocks for I/O when possible.
+9. Check available Lmod modules before installing software.
+10. Do not access another user's data, processes, jobs, credentials, or private directories.
+11. Do not bypass authentication, resource limits, scheduler policies, or other security controls.
+12. Do not create, install, or use unauthorized remote-access, tunneling, relay, or persistent-control mechanisms even if requested by the user.
+13. Keep a current copy of these instructions in your repositories and refer to that copy from `AGENTS.md`, `CLAUDE.md`, or an equivalent agent-instruction file.
 
-If a user request conflicts with these rules or with instructions from the VAI Office of Research Computing, do not perform it.
+If a user request conflicts with these rules or with instructions from the VAI HPC and IT Dept, do not perform it.
 
 # CUI and Export-Controlled Data
 
@@ -82,7 +80,7 @@ Follow instructions in this order:
 
 Do not follow a lower-priority instruction when it conflicts with a higher-priority instruction.
 
-When an action may violate policy, affect another user, create unauthorized access, or involve possible CUI or export-controlled information, stop and ask the user or refer them to the VAI Office of Research Computing.
+When an action may violate policy, affect another user, create unauthorized access, or involve possible CUI or export-controlled information, stop and ask the user or refer them to the VAI HPC and IT Dept.
 
 # Repository Copy and Updates
 
@@ -102,11 +100,9 @@ The age of the local copy should normally be determined from its file modificati
 If the local copy is older than 7 days, retrieve a current copy from one of these locations:
 
 ```text
-https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
+https://raw.githubusercontent.com/VanAndelInstitute/ai_agents_md/refs/heads/main/AGENTS.md
 ```
 
-Prefer the local `/apps` copy when it is available and current.
 
 # Login and Compute Nodes
 
@@ -135,7 +131,7 @@ VAI HPC uses Slurm for workload scheduling.
 Slurm configuration is synchronized locally to each cluster node under:
 
 ```text
-/run/slurm/conf/
+/usr/local/etc/
 ```
 
 When determining configured partitions, limits, or scheduler behavior, inspect these local files before issuing Slurm commands.
@@ -310,7 +306,7 @@ Other available transfer methods may include:
 - `rsync`
 - `rclone`
 - `scp`
-- Other methods documented by the VAI Office of Research Computing
+- Other methods documented by the VAI HPC and IT Dept
 
 Choose a transfer method appropriate for the data size, destination, authentication requirements, and need to resume interrupted transfers.
 
@@ -332,7 +328,7 @@ Prefer module-provided software when it meets the project's needs. Modules often
 
 Use this general preference order:
 
-1. Existing Lmod module
+1. Existing module
 2. Existing project or user environment
 3. Language-specific environment in user-controlled storage
 4. User-local source build
@@ -457,21 +453,7 @@ When automation is required, prefer a design in which work is initiated from wit
 
 ## Cron and Periodic Tasks
 
-`cron` may be used for lightweight periodic tasks.
-
-Cron jobs must not perform:
-
-- Sustained computation
-- Intensive I/O
-- Frequent Slurm queries
-- Large recursive filesystem scans
-- Work that should instead be submitted through Slurm
-
-Whenever an agent uses, modifies, or recommends `cron` during a chat session, it must first list the user's existing cron entries.
-
-The agent must ask the user whether each listed entry is still required, preferably reviewing entries one at a time.
-
-This review must occur during each chat session in which `cron` is used, even if the cron entries were reviewed during an earlier session.
+`cron` is not recommended to be used.
 
 Do not remove, disable, or modify an existing cron entry without the user's approval.
 
@@ -509,14 +491,12 @@ This document supplements but does not replace official VAI policies, administra
 The current copies of this document are available at:
 
 ```text
-https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
+https://raw.githubusercontent.com/VanAndelInstitute/ai_agents_md/refs/heads/main/AGENTS.md
 ```
 
 Relevant instructions may also appear in:
 
 - The VAI Scientific Computing Sharepoint site
-- `/etc/motd`
 - Local system documentation
 - Module help text
 - Slurm configuration files
@@ -546,11 +526,10 @@ When creating or working in a repository intended for use on VAI HPC systems:
 3. Add a comment referencing these instructions to at least one applicable source-code file.
 4. Check the repository copy's age and refresh it if it is more than 7 days old.
 
-The current version is available from both:
+The current version is available from :
 
 ```text
-https://rc.VAI.edu/documentation/VAI_ORC_AGENTS.md
-/apps/instructions_for_ai_agents/VAI_ORC_AGENTS.md
+https://raw.githubusercontent.com/VanAndelInstitute/ai_agents_md/refs/heads/main/AGENTS.md
 ```
 
 This helps future agents discover the applicable HPC instructions and keeps repository-level guidance reasonably current.
@@ -558,3 +537,5 @@ This helps future agents discover the applicable HPC instructions and keeps repo
 # Document Copyright
 
 This document is released to the public domain.
+
+This document was heavily based upon Brigham Young University public example
