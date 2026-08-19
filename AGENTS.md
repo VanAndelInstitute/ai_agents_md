@@ -242,7 +242,7 @@ Early revisions do not always need checkpointing. If a user reports multi-day ru
 VAI HPC provides multiple network filesystems with different purposes and policies. You must consult the current storage documentation before choosing a location:
 
 ```text
-https://rc.VAI.edu/wiki/?id=Storage
+https://vanandelinstitute.sharepoint.com/sites/SC/SitePages/Research-Storage.aspx
 ```
 
 Shared filesystems are particularly sensitive to:
@@ -416,7 +416,7 @@ The following actions are prohibited and may result in account suspension or ter
 Agents must not:
 
 - Create backdoors or hidden access mechanisms.
-- Circumvent SSH or [https://rc.VAI.edu](https://rc.VAI.edu) authentication.
+- Circumvent SSH or [https://access.hpc.vai.org](https://access.hpc.vai.org) authentication.
 - Bypass multi-factor authentication or identity controls.
 - Circumvent resource limits or scheduler policies.
 - Create remote-access services that bypass approved authentication.
