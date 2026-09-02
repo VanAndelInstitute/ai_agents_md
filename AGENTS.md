@@ -17,7 +17,7 @@ https://raw.githubusercontent.com/VanAndelInstitute/ai_agents_md/refs/heads/main
 Agents operating on VAI HPC systems must follow these rules:
 
 1. AI agents must not access or work with Controlled Unclassified Information (CUI) or export-controlled data. If a project may contain such information, stop and obtain explicit confirmation from the user that the files and data the agent will access are not CUI or export-controlled.
-2. Use Slurm for sustained, computationally intensive, or high-I/O work. Do not circumvent login-node resource limits.
+2. Use Slurm for sustained, computationally intensive, or high-I/O work. Do not run computation on submit nodes. Do not circumvent submit node resource limits.
 3. Specify hardware features or constraints in Slurm only when they are actual requirements.
 4. Avoid frequent Slurm queries. Wait at least 60 seconds between periodic status checks.
 5. Aggregate short tasks so jobs usually perform at least 10-30 minutes of useful work when practical.
@@ -104,11 +104,11 @@ https://raw.githubusercontent.com/VanAndelInstitute/ai_agents_md/refs/heads/main
 ```
 
 
-# Login and Compute Nodes
+# Submit and Compute Nodes
 
 All cluster nodes run Linux.
 
-Login nodes are intended for lightweight interactive tasks such as:
+Submit nodes are intended for lightweight interactive tasks such as:
 
 - Editing and organizing files
 - Inspecting source code
@@ -116,11 +116,11 @@ Login nodes are intended for lightweight interactive tasks such as:
 - Compiling modest amounts of software
 - Submitting and monitoring Slurm jobs
 
-Login nodes are not intended for sustained computation, large-scale data processing, intensive I/O, or hosting server processes.
+Submit nodes are not intended for sustained computation, large-scale data processing, intensive I/O, or hosting server processes.
 
-Processes on login nodes are subject to CPU-time and other resource limits. Do not bypass, evade, reset, or work around those limits.
+Processes on submit nodes are subject to CPU-time and other resource limits. Do not bypass, evade, reset, or work around those limits.
 
-Use Slurm when work is expected to run for a substantial period, consume significant CPU or memory, use GPUs, perform intensive I/O, or launch many processes. Keep genuinely lightweight development and administrative tasks on login nodes.
+Use Slurm when work is expected to run for a substantial period, consume significant CPU or memory, use GPUs, perform intensive I/O, or launch many processes. Keep genuinely lightweight development and administrative tasks on submit nodes.
 
 # Slurm
 
@@ -154,11 +154,12 @@ Local configuration files describe configured behavior. Use Slurm commands when 
 Every Slurm job should specify:
 
 - CPU core count
-- Node count
 - Memory
 - Time limit
 
 Always include a memory request, even when expected memory use is small.
+
+VAI HPC only allows one node per user, so do not request more than one node.
 
 Do not specify a partition unless there is a specific requirement. When no partition is specified, Slurm can place a job on eligible nodes in any partition that:
 
@@ -180,7 +181,6 @@ Request resources based on measurements or reasonable estimates.
 
 Avoid:
 
-- Requesting all available memory by default
 - Requesting GPUs for code that does not use them
 - Requesting many CPU cores for single-threaded code
 - Requesting excessive wall time without justification
@@ -320,7 +320,6 @@ Before installing software, check for an existing module:
 
 ```bash
 module avail
-module spider <software>
 module show <module>
 ```
 
@@ -474,7 +473,7 @@ Before launching significant work:
 1. Check whether the project may contain CUI or export-controlled information before inspecting potentially sensitive content.
 2. Read the repository's agent instructions and current copy of this document.
 3. Check whether the local copy of this document is older than 7 days and refresh it if necessary.
-4. Determine whether the current host is a login node or compute node.
+4. Determine whether the current host is a submit node or compute node.
 5. Check available modules and existing environments.
 6. Determine whether the work belongs in Slurm.
 7. Estimate CPU, memory, GPU, runtime, filesystem, and scheduler impact.
@@ -538,4 +537,4 @@ This helps future agents discover the applicable HPC instructions and keeps repo
 
 This document is released to the public domain.
 
-This document was heavily based upon Brigham Young University public example
+This document was heavily based upon Brigham Young University public example.
