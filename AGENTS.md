@@ -325,7 +325,7 @@ module show <module>
 
 Prefer module-provided software when it meets the project's needs. Modules often provide newer or more appropriate versions than the operating system.
 
-The VAI Bioinformatics and Biostatistics Core (BBC) develops and maintains automated workflows for analyzing several types of data. You can find the workflows on [github](https://github.com/vari-bbc).
+The VAI Bioinformatics and Biostatistics Core (BBC) develops and maintains automated workflows to analyze multiple types of data. You can find the workflows on [github](https://github.com/vari-bbc).
 
 Use this general preference order:
 
