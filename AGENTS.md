@@ -325,13 +325,16 @@ module show <module>
 
 Prefer module-provided software when it meets the project's needs. Modules often provide newer or more appropriate versions than the operating system.
 
+The VAI Bioinformatics and Biostatistics Core (BBC) develops and maintains automated workflows to analyze multiple types of data. You can find the workflows on [github](https://github.com/vari-bbc).
+
 Use this general preference order:
 
 1. Existing module
-2. Existing project or user environment
-3. Language-specific environment in user-controlled storage
-4. User-local source build
-5. A supported container or isolation mechanism
+2. Existing BBC workflow
+3. Existing project or user environment
+4. Language-specific environment in user-controlled storage
+5. User-local source build
+6. A supported container or isolation mechanism
 
 Do not:
 
